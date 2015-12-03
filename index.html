@@ -62,8 +62,8 @@
             <div class="error">Please enter both your first and last name.</div>
             <br/>
             <form>
-                <input type="text" class="textbox" id="first-name" placeholder="Enter your first name">
-                <input type="text" class="textbox" id="last-name" placeholder="Enter your last name"><br/><br/>
+                <input type="text" name="firstName" class="textbox" id="first-name" placeholder="Enter your first name">
+                <input type="text" name="lastName" class="textbox" id="last-name" placeholder="Enter your last name"><br/><br/>
                 <input type="submit" class="jedi-name-btn" value="Get Your Jedi Name!">
             </form>
             <br/><br/>
@@ -78,20 +78,20 @@
                 var firstName = $("#first-name").val();
                 var lastName = $("#last-name").val();
                 
-                // prevent form submit
+                // prevent default form submit
                 e.preventDefault();
                 
                 // check for first name and last name
                 if (!firstName || !lastName) {
                     
-                    // show error if 
+                    // show error if no first or last name
                     $(".error").fadeIn();
                     
                 } else {
                     // hide error
                     $(".error").hide();
                     
-                    //retrieve jedi name
+                    // retrieve jedi name
                     $.get("/jedi/"+firstName+"/"+lastName+"/", function(response) {
                         
                         // store greeting response in variable
