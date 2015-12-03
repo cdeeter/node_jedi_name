@@ -1,13 +1,16 @@
-var express = require('express');
+// set up express
+var express = require("express");
 
 var app = express();
 
-var path = require('path');
+var path = require("path");
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+// load the index page
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname + "/index.html"));
 });
 
+// jedi name API
 app.get("/jedi/:firstname/:lastname", function(req, res) {
     // get first and last name from request params 
     var personFirstName = req.params.firstname;
@@ -18,6 +21,7 @@ app.get("/jedi/:firstname/:lastname", function(req, res) {
     var jediLastName = personFirstName[0].toUpperCase() + personFirstName.slice(1, 2);
     var jediFirstName = personLastName[0].toUpperCase() + personLastName.slice(1, 3);
     
+    // possible greetings
     var greetings = [
         "There is good in you, ",
         "The Force is strong with ",
