@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jedi Name Generator</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <style type="text/css">
+            body {
+                background: url("http://home.scarlet.be/yodawallpapers/Star%20Wars%20wallpaper%20Obi%20Wan.jpg") no-repeat right bottom;
+                background-color: black;
+                height: 600px;
+                color: white;
+                font-size: 20px;
+                font-family: Arial;
+            }
+            
+            #jedi-name-container {
+                display: block;
+                position: absolute;
+                left: 75px;
+                top: 150px;
+                width: 550px;
+                text-align: center;
+            }
+            
+            .textbox {
+                height: 50px;
+                width: 250px;
+                font-size: 24px;
+                padding: 5px;
+                border-radius: 15px;
+            }
+            
+            .jedi-name-btn {
+                display: block;
+                margin: auto;
+                padding: 20px;
+                font-size: 24px;
+                border-radius: 15px;
+                border: 5px double white;
+                color: white;
+                background-color: black;
+            }
+            
+            .error {
+                display: none;
+                color: red;
+                font-size: 24px;
+                text-align: center;
+            }
+            
+            .jedi-greeting {
+                text-align: center;
+            }
+            
+            .blue {
+                color: #0058ff;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="jedi-name-container">
+            <div class="error">Please enter both your first and last name.</div>
+            <br/>
+            <form>
+                <input type="text" class="textbox" id="first-name" placeholder="Enter your first name">
+                <input type="text" class="textbox" id="last-name" placeholder="Enter your last name"><br/><br/>
+                <input type="submit" class="jedi-name-btn" value="Get Your Jedi Name!">
+            </form>
+            <br/><br/>
+            <h2><span id="jedi-greeting"></span></h2>
+        </div>
+        <script type="text/javascript">
+            
+            $("form").on("submit", getJediName);
+            
+            function getJediName(e) {
+                // store first name and last name in variables
+                var firstName = $("#first-name").val();
+                var lastName = $("#last-name").val();
+                
+                // prevent form submit
+                e.preventDefault();
+                
+                // check for first name and last name
+                if (!firstName || !lastName) {
+                    
+                    // show error if 
+                    $(".error").fadeIn();
+                    
+                } else {
+                    // hide error
+                    $(".error").hide();
+                    
+                    //retrieve jedi name
+                    $.get("/jedi/"+firstName+"/"+lastName+"/", function(response) {
+                        
+                        // store greeting response in variable
+                        var jediGreeting = response.greeting;
+                        
+                        // reset text boxes
+                        $("input[type='text']").val('');
+                        
+                        // add greeting to the DOM
+                        $("#jedi-greeting").html(jediGreeting);
+                    });
+                }
+            }
+        </script>
+    </body>
+</html>
